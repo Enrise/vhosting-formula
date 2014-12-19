@@ -1,11 +1,28 @@
-# Base setup
-{%- set webroot_base = salt['pillar.get']('vhosting:server:basedir', '/srv/http') %}
-{{ webroot_base }}:
-  file.directory
+{% from "vhosting/map.jinja" import webstack, webserver_edition, webserver with context %}
+{% from "vhosting/lib.sls" import call_macro with context %}
 
-# Logrotate
-vhost_logrotate:
-  file.managed:
-    - name: /etc/logrotate.d/vhosts
-    - source: {{ salt['pillar.get']('vhosting:server:logrotate_template', 'salt://vhosting/templates/logrotate.conf.jinja') }}
-    - template: {{ salt['pillar.get']('vhosting:server:logrotate_template_type', 'jinja') }}
+# Loops trough the users and create services for them
+{%- for username, resources in salt['pillar.get']('vhosting:users', {}).items() %}
+
+{%-  if 'vhost' in resources %}
+{% from "vhosting/components/user.sls" import create_user with context %}
+# Create user {{ username }}
+{{ create_user(username, resources) }}
+{% endif -%}
+
+{%- for resource_type, resource_settings in resources.items() %}
+# Resource: {{ resource_type }}
+{%- if resource_settings is mapping %}
+# Multi resource
+{%- for resource_key, resource_settings in resource_settings.items() %}
+# {{ resource_key }}
+{{ call_macro(salt, webstack, username, resource_type, resource_settings, resource_key ) }}
+{%- endfor %}
+{%- else %}
+# Single resource ({{resource_type}})
+{{ call_macro(salt, webstack, username, resource_type, resource_settings) }}
+{%- endif %}
+
+{%- endfor %}
+
+{%- endfor %}

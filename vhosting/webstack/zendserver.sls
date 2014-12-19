@@ -88,7 +88,7 @@ kill_webserver:
     - repl: 'zray.enable=0'
     - watch_in:
       - service: zendserver
-      {%- if webserver == 'nginx' %}
+{%- if webserver == 'nginx' %}
       - service: php5-fpm
-      {% endif -%}
+{% endif -%}
 {%- endif %}

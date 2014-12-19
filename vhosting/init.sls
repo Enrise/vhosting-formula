@@ -3,6 +3,4 @@ include:
   - vhosting.grains
   - vhosting.base
   - vhosting.install
-  #- vhosting.webstack
-  #- mariadb
   - vhosting.users

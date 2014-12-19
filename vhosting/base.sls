@@ -7,5 +7,5 @@
 vhost_logrotate:
   file.managed:
     - name: /etc/logrotate.d/vhosts
-    - source: {{ salt['pillar.get']('vhosting:server:logrotate_template', 'salt://vhosting/templates/template.conf') }}
+    - source: {{ salt['pillar.get']('vhosting:server:logrotate_template', 'salt://vhosting/templates/logrotate.conf.jinja') }}
     - template: {{ salt['pillar.get']('vhosting:server:logrotate_template_type', 'jinja') }}

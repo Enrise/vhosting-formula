@@ -1,7 +1,7 @@
 # Install a webstack based on Zend Server
 {%- set webserver = salt['pillar.get']('vhosting:server:webserver', 'nginx') %}
-{%- set disable_webserver = salt['pillar.get']('vhosting:server:disable_webserver', False) %}
-{%- set enable_zray = salt['pillar.get']('vhosting:server:enable_zray', False) %}
+{%- set disable_webserver = salt['pillar.get']('vhosting:server:config:disable_webserver', False) %}
+{%- set enable_zray = salt['pillar.get']('vhosting:server:config:zendserver:enable_zray', False) %}
 
 include:
   - zendserver

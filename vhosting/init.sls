@@ -2,3 +2,4 @@
 include:
   - vhosting.install
   - vhosting.base
+  - vhosting.config

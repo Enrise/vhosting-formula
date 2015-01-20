@@ -6,6 +6,12 @@ vhosting:
     webserver: nginx
     # Which edition of the webserver to use. Currently supported: vanilla & zendserver
     edition: vanilla
+  config:
+    php:
+      # Put in the section names (if required) and insert the config like so:
+      PHP:
+        error_reporting: 'E_ALL'
+        short_open_tags: false
 
   # Vhosts are per-user allowing multiple users to have multiple websites
   users:

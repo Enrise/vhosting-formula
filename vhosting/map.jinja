@@ -2,21 +2,25 @@
 {% set webstack = salt['grains.filter_by']({
     'vanilla.apache': {
       'webserver_config_dir': '/etc/apache2',
+      'php_config_dir': '/etc/php5/conf.d',
       'sites_available': '/etc/apache2/sites-available',
       'sites_enabled': '/etc/apache2/sites-enabled',
     },
     'vanilla.nginx': {
       'webserver_config_dir': '/etc/nginx',
+      'php_config_dir': '/etc/php5/conf.d',
       'sites_available': '/etc/nginx/sites-available',
       'sites_enabled': '/etc/nginx/sites-enabled',
     },
     'zendserver.apache': {
       'webserver_config_dir': '/etc/apache2',
+      'php_config_dir': '/usr/local/zend/etc/conf.d',
       'sites_available': '/etc/apache2/sites-available',
       'sites_enabled': '/etc/apache2/sites-enabled',
     },
     'zendserver.nginx': {
       'webserver_config_dir': '/etc/nginx',
+      'php_config_dir': '/usr/local/zend/etc/conf.d',
       'sites_available': '/etc/nginx/sites-available',
       'sites_enabled': '/etc/nginx/sites-enabled'
     },

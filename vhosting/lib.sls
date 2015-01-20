@@ -27,3 +27,24 @@
 {% macro get_webstack(salt, key, default=None) %}
 {% from "vhosting/map.jinja" import webstack with context %}
 {% endmacro %}
+
+# Serializes dicts into sequenced data
+{%- macro serialize(data) -%}
+    {%- if data is mapping -%}
+        {%- set ret = [] -%}
+        {%- for key, value in data.items() -%}
+            {%- set value = serialize(value)|load_json() -%}
+            {%- do ret.append({key: value}) -%}
+        {%- endfor -%}
+    {%- elif data is iterable and data is not string -%}
+        {%- set ret = [] -%}
+        {%- for value in data -%}
+            {%- set value = serialize(value)|load_json() -%}
+            {%- do ret.append(value) -%}
+        {%- endfor -%}
+    {%- else -%}
+        {% set ret = data %}
+    {%- endif -%}
+
+    {{ ret|json() }}
+{%- endmacro -%}

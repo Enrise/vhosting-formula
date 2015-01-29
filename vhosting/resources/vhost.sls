@@ -63,7 +63,8 @@
 # only enable php for true vhosts, not redirect/stubs
 {%- from "phpfpm/lib.sls" import create_pool with context %}
 {%- from "phpfpm/map.jinja" import phpfpm as phpfpm_map %}
-{{ create_pool(salt, domain_safe, owner, phpfpm_map.dirs.config) }}
+{%- set phpfpm_template = params.get('phpfpm_template', 'salt://phpfpm/templates/pool.conf.jinja') %}
+{{ create_pool(salt, domain_safe, owner, phpfpm_map.dirs.config, phpfpm_template) }}
 {%- endif %}
 ############################################################################################################################
 

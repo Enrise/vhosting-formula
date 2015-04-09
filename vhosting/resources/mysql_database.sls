@@ -38,6 +38,7 @@ mysqldb_{{ owner }}_{{ name }}_grant_{{ host }}:
 {%- endfor -%}
 {%- endif %} #hosts in params
 
+# @todo: Move this part to a standalone resource
 {%- if params.get('backup', False) and salt['pillar.get']('backups:enable', True) %}
 # Create a backupninja config file for MySQL database backups
 backup_mysqldb_{{ owner }}_db_{{ name }}:

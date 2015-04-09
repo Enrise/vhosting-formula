@@ -1,5 +1,5 @@
 # Logrotate file managed by Salt
-
+# This file is managed by Salt via {{ source }}
 {% if accumulator|default(False) %}
 {%- for logdir in accumulator['vhost_logrotate'] -%}
 {{ logdir }}/*.log

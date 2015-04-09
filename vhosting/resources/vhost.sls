@@ -89,7 +89,11 @@
   - require:
     - pkg: {{ webserver }}
     - user: {{ owner }}
+  {%- if deploy_structure == False and params.get('webroot_public', False) == True %}
+  - webroot: {{ webroot ~ '/public' }}
+  {%- else %}
   - webroot: {{ webroot }}
+  {%- endif %}
   - logdir: {{ logdir }}
   - owner: {{ owner }}
   - domain: {{ domain }}

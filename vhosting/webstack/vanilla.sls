@@ -4,6 +4,6 @@
 
 include:
   - {{ webserver }}
-  {% if (webserver == 'nginx' and install_phpfpm == True) or install_phpfpm == True -%}
+  {% if webserver == 'nginx' and install_phpfpm == True -%}
   - phpfpm
   {% endif -%}

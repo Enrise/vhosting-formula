@@ -23,7 +23,9 @@ Same applies for databases, if there is no ``mysql_database`` key underneath the
 
 The 'username' for DB-only has no effect (e.g. it doesn't create) system users since we won't need them and is only to allow for easy grouping.
 
-Only one webstack is possible at the time, but multiple databases are possible (e.g. MySQL and Postgresql). Depending on the needs you could only use one or more of the components (vhosts, mysql_databases, cronjobs etc) or all. The installer automatically takes care of the installation of the necessary components to get this to work.
+Only one webstack is possible at the time, but multiple databases are possible (e.g. MySQL and PostgreSQL).
+Depending on the needs you could only use one or more of the components (vhosts, mysql_databases, cronjobs etc) or all.
+The installer automatically takes care of the installation of the necessary components to get this to work.
 
 Configuration
 ================
@@ -43,7 +45,7 @@ The ``server`` part of the Pillar data contains which edition of webserver (vani
         edition: vanilla
 
 .. note::
-    If ``zendserver`` is being configured as edition this formula should be available and configured as well.
+    If ``zendserver`` is being configured as edition this formula should be available on your Salt fileserver and configured as well.
     This does duplicate the webserver part since this particular formula only reads its own information.
     If the formula is not available it cannot install ZendServer (and components) and if the Pillar data is missing it will install it with default values which may differ from your requirements.
 
@@ -52,10 +54,8 @@ The ``server`` part of the Pillar data contains which edition of webserver (vani
 A user is only created when a 'vhost' is set, since this the only reason (currently) why
 a user would be needed.
 
-For users two individual flags can be set:
+For users individual flags can be set:
 
-**keyhost**
-           Install the key for the ``keyhost`` server *[ENRISE-ONLY]*
 **deploy_structure**
            Create a ``data`` and a ``releases`` folder.
            The webroot is a symlinked to ``../releases/current`` unless the vhost is set to use 'public' (more about this later)
@@ -85,24 +85,24 @@ The minimal configuration for a vhost is:
 The following keys can be defined:
 
 **webroot_public**
-              A boolean value (False by default) telling the webserver configuration to use `/public` as entry point.
-              This is required for some frameworks such as Laravel or Zend Framework.
+      A boolean value (False by default) telling the webserver configuration to use `/public` as entry point.
+      This is required for some frameworks such as Laravel or Zend Framework.
 **webroot**
        A string with the desired webroot location. **NOT YET IMPLEMENTED**
 **aliases**
        A list of aliasses (with a dash in front of them) that need to be added to the vhost.
 **redirect_to**
-            A string which will - if set - redirect the domain to the given URL and uses the ``redirect`` vhost.
-            This may be used in conjunction with ``ssl``
+       A string which will - if set - redirect the domain to the given URL and uses the ``redirect`` vhost.
+      This may be used in conjunction with ``ssl``
 **ssl**
-   A dictionary containing at least ``key`` and ``cert``, optionally ``ca`` for the CA chain (required for certain SSL providers) and boolean ``forward`` to force non-ssl to SSL.
+   A dictionary containing at least ``key`` and ``cert``, optionally ``ca`` for the CA chain (required for certain SSL providers), boolean ``forward`` to force non-ssl to SSL and boolean ``spdy`` to enable SPDY mode (if a compatible webserver is being used).
 **listen_ip**
-         A string containing the listen IP (any IP by default, may be set to a specific one.
-         Please note: all vhosts should be explicitly set if this is being used!)
+      A string containing the listen IP (any IP by default, may be set to a specific one.
+      Please note: all vhosts should be explicitly set if this is being used!)
 **listen_port**
-           The webserver listens on port 80, can be overruled using this.
+      The webserver listens on port 80, can be overruled using this.
 **listen_port_ssl**
-               Same as ``listen_port`` but for SSL.
+      Same as ``listen_port`` but for SSL.
 
 Depending on the vhost template more parameters may be provided (e.g for nginx: ``logdir``, ``try_files``, ``index``, ``fastcgi_pass``, ``fastcgi_params`` or ``extra_config``)
 
@@ -169,8 +169,10 @@ Optionally the following keys can be specified:
 Extending
 ================
 The formula is very flexible. It allows you simply extend the system by configuring more in Pillar and creating macro-files.
+For instance, if you want to add a custom resource you can simply create `vhosting/resources/ssh_key_deploy.sls` in your own states directory (as configured in your Salt fileserver).
+Due to the nature of Salt's fileserver, any directories higher than the formulas directory will be included first. This allows you to add in new components or replace core-components.
 
-It makes use of macro's placed in the ``resources`` folder which all provide the ``create`` macro.
+Resources makes use of macro's placed in the ``resources`` folder which all need to provide the ``create`` macro.
 For instance if you want redis databases to be created, create ``redis_database.sls`` in the resources folder and execute all configured commands in this macro.
 
 In some cases you may need to retrieve additional information from pillars (e.g 'higher' values).

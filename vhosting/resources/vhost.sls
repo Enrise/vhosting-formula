@@ -114,7 +114,7 @@
 # Check if backups are enabled
 {%- if backup %}
 # Create a backupninja config file for vhosts backups
-# xxx: todo: Create a macro for this and include it
+# @todo: Create a macro/subresource for this
 backup_job_vhost_{{ domain }}:
   file.managed:
     - name: /etc/backup.d/20-vhost_{{ domain }}.rdiff

@@ -88,7 +88,7 @@ The following keys can be defined:
       A boolean value (False by default) telling the webserver configuration to use `/public` as entry point.
       This is required for some frameworks such as Laravel or Zend Framework.
 **webroot**
-       A string with the desired webroot location. **NOT YET IMPLEMENTED**
+       A string with the desired webroot location instead of auto-generated one based on the domain.
 **aliases**
        A list of aliasses (with a dash in front of them) that need to be added to the vhost.
 **redirect_to**

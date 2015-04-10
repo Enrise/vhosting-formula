@@ -24,7 +24,7 @@
 
 {%- set vhost_file_available = baseconf.get('sites_available') ~ '/' ~ domain_safe ~ '.conf' %}
 {%- set vhost_file_enabled = baseconf.get('sites_enabled') ~ '/' ~ priority ~ '-' ~ domain_safe ~ '.conf' %}
-{%- set deploy_structure = salt['pillar.get']('vhosting:users:' ~ owner ~ ':deploy_structure', False) %
+{%- set deploy_structure = salt['pillar.get']('vhosting:users:' ~ owner ~ ':deploy_structure', False) %}
 
 {%- if 'redirect_to' in params %}
 # Redirect vhost, no need for directory structure etc

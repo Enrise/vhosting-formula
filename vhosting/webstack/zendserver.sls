@@ -86,6 +86,7 @@ kill_webserver:
   file.replace:
     - pattern: 'zray.enable=1'
     - repl: 'zray.enable=0'
+    - onlyif: test -e /usr/local/zend/etc/conf.d/zray.ini    
     - watch_in:
       - service: zendserver
 {%- if webserver == 'nginx' %}

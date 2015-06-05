@@ -8,7 +8,7 @@
 # Ensure user {{ username }} is created
 {{ username }}:
   user.present:
-    - shell: {{ params.get('shell', '/bin/bash') }}
+    - shell: '/bin/bash'
     - createhome: True
     - home: {{ homedir }}
 

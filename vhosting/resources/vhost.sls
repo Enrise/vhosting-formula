@@ -90,6 +90,9 @@
   - require:
     - pkg: {{ webserver }}
     - user: {{ owner }}
+  {% if webserver == 'nginx' and salt['pillar.get']('nginx:config:dhparam', False) %}
+    - cmd: generate_dhparam
+  {%- endif %}
   {%- if deploy_structure == False and params.get('webroot_public', False) == True %}
   - webroot: {{ webroot ~ '/public' }}
   {%- else %}

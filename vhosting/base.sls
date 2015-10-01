@@ -1,10 +1,16 @@
 {% from "vhosting/map.jinja" import webstack, webserver_edition, webserver with context %}
 {% from "vhosting/lib.sls" import call_macro with context %}
+{%- set webroot_base = salt['pillar.get']('vhosting:server:basedir', '/srv/http') %}
 
 # Loops trough the users and create services for them
 {%- for username, resources in salt['pillar.get']('vhosting:users', {}).items() %}
 
 {%- if 'vhost' in resources %}
+# Ensure the root folder has been created
+webroot_base:
+  file.directory:
+    - name: {{ webroot_base }}
+
 {% from "vhosting/components/user.sls" import create_user with context %}
 # Create user {{ username }}
 {{ create_user(username, resources) }}

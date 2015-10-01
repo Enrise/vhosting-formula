@@ -11,6 +11,8 @@
     - shell: '/bin/bash'
     - createhome: True
     - home: {{ homedir }}
+    - require:
+      - file: webroot_base
 
 # Create a domains folder too
 {{ homedir }}/hosts:

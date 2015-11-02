@@ -7,8 +7,9 @@ include:
   - .grains
 
 # Create base root for vhosts
-{{ webroot_base }}:
-  file.directory
+webroot_base:
+  file.directory:
+    - name: {{ webroot_base }}
 
 # Ensure the custom-logs vhosting are being rotated
 vhost_logrotate:

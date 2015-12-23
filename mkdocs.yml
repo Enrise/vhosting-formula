@@ -1,0 +1,8 @@
+site_name: Enrise Vhosting Formula
+theme: readthedocs
+pages:
+  - [index.md, Home]
+  - [getting-started.md, Getting started]
+  - [configuration.md, Configuration]
+  - [extending.md, Configuration]
+  - [issues.md, Issues]

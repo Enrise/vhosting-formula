@@ -116,7 +116,7 @@
   - group: root
   {{- sls_block(params) }}
   - domain_safe: {{ domain_safe }}
-  {%- if php and webserver == 'nginx' %}
+  {%- if php and webserver == 'nginx' and phpfpm_socket_dir is defined %}
   - fpm_sock_dir: {{ phpfpm_socket_dir }}
   {%- endif %}
 

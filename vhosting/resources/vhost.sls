@@ -33,6 +33,8 @@
 # Normal vhost, required folders
 {%- set template_file = params.get('template_file', vhost_template_path ~ '/default.conf.jinja') %}
 
+{%- set php_version = params.get('php_version', None) %}
+
 ############################################################################################################################
 {%- if deploy_structure %}
 #xxx todo: create separate module for deploy structure for standalone usage
@@ -65,7 +67,16 @@
 {%- from "phpfpm/map.jinja" import phpfpm as phpfpm_map %}
 {%- set phpfpm_template = params.get('phpfpm_template', 'salt://phpfpm/templates/pool.conf.jinja') %}
 {%- set phpfpm_params = params.get('fpm_params', {}) %}
-{{ create_pool(salt, domain_safe, owner, phpfpm_map.dirs.config, phpfpm_template, phpfpm_params) }}
+{%- set phpfpm_pool_dir = phpfpm_map.dirs.config %}
+{%- set phpfpm_socket_dir = phpfpm_map.dirs.socket %}
+
+{%- if php_version %}
+  # Use alternative FPM Pool directory
+  {%- set phpfpm_pool_dir = "/opt/php/php-" ~ php_version ~ "/etc/php-fpm.d" %}
+  {%- set phpfpm_socket_dir = "/opt/php/php-" ~ php_version ~ "/tmp" %}
+{%- endif %}
+
+{{ create_pool(salt, domain_safe, owner, phpfpm_pool_dir, phpfpm_socket_dir, phpfpm_template, phpfpm_params, php_version) }}
 {%- endif %}
 ############################################################################################################################
 
@@ -106,8 +117,7 @@
   {{- sls_block(params) }}
   - domain_safe: {{ domain_safe }}
   {%- if php and webserver == 'nginx' %}
-  {%- from "phpfpm/map.jinja" import phpfpm as phpfpm_map %}
-  - fpm_sock_dir: {{ phpfpm_map.dirs.socket }}
+  - fpm_sock_dir: {{ phpfpm_socket_dir }}
   {%- endif %}
 
 # Enable vhost

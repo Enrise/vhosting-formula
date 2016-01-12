@@ -38,6 +38,12 @@ include:
     - watch_in:
       - service: zendserver
 
+# Ensure the socket directory exists
+/usr/local/zend/tmp:
+  file.directory:
+    - require:
+      - pkg: zendserver
+
 # this is not very DRY but since we cannot *extend*
 php5-fpm:
   service.running:
@@ -86,7 +92,7 @@ kill_webserver:
   file.replace:
     - pattern: 'zray.enable=1'
     - repl: 'zray.enable=0'
-    - onlyif: test -e /usr/local/zend/etc/conf.d/zray.ini    
+    - onlyif: test -e /usr/local/zend/etc/conf.d/zray.ini
     - watch_in:
       - service: zendserver
 {%- if webserver == 'nginx' %}

@@ -171,3 +171,36 @@ Optionally the following keys can be specified:
 
 **comment**
 > An optional comment
+
+### PHP-FPM Versions
+
+The vhosting module recognizes either the vanilla PHP-FPM 5.5 installation, or any combination of PHP-FPM 5.6 and PHP-FPM 7, provided by Ondřej Surý via the PPA.
+When specified, either PHP 5.6, PHP-FPM 7.0, or a combination of both will be installed.
+
+Because both the phpfpm formula and the vhosting formula need to know what PHP-FPM versions are to be used, this must be set on both the global level like so:
+
+```yaml
+phpfpm:
+  php_versions:
+    - '5.6'
+    - '7.0'
+```
+
+and on a per vhost basis as well:
+
+```yaml
+vhosting:
+  users:
+    example:
+      vhost:
+        example.com:
+          php_version: '7.0'
+```
+
+This also allows for choosing between PHP 5.6 and PHP 7.0 on a per vhost basis.
+
+If both the global PHP-FPM versions and the per vhost configuration are omitted, PHP 5.5 will be used instead.
+
+#### Some warnings
+* It is not possible to use PHP-FPM 5.5 together with either 5.6 or 7.0, as this will break things.
+* If other packages rely on either the package or service `php5-fpm`, it is not possible to use PHP-FPM 5.6 or 7.0

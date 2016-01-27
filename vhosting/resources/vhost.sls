@@ -72,8 +72,8 @@
 
 {%- if php_version %}
   # Use alternative FPM Pool directory
-  {%- set phpfpm_pool_dir = "/opt/php/php-" ~ php_version ~ "/etc/php-fpm.d" %}
-  {%- set phpfpm_socket_dir = "/opt/php/php-" ~ php_version ~ "/tmp" %}
+  {%- set phpfpm_pool_dir = "/etc/php/" ~ php_version ~ "/fpm/pool.d" %}
+  {%- set phpfpm_socket_dir = "/etc/php/" ~ php_version ~ "/tmp" %}
 {%- endif %}
 
 {{ create_pool(salt, domain_safe, owner, phpfpm_pool_dir, phpfpm_socket_dir, phpfpm_template, phpfpm_params, php_version) }}

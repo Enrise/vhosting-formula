@@ -7,7 +7,7 @@
 {%- if php_config %}
 
 # Vanilla Ubuntu 14.04 packages, see phpfpm formula README for more info.
-{% if not php_versions %}
+{% if php_versions|length == 0 %}
 
 php_config:
   file.managed:

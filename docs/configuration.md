@@ -202,5 +202,5 @@ This also allows for choosing between PHP 5.6 and PHP 7.0 on a per vhost basis.
 If both the global PHP-FPM versions and the per vhost configuration are omitted, PHP 5.5 will be used instead.
 
 #### Some warnings
-* It is not possible to use PHP-FPM 5.5 together with either 5.6 or 7.0, as this will break things.
-* If other packages rely on either the package or service `php5-fpm`, it is not possible to use PHP-FPM 5.6 or 7.0
+* It is not possible to use PHP-FPM 5.5 together with either 5.6 or 7.0, as 5.6 will remove 5.5 and the formula does not manage 7.0 alongside 5.5.
+* If other packages depend on either the package or service php5-fpm, it is not possible to use PHP-FPM 5.6 or 7.0, because of the init script being renamed.

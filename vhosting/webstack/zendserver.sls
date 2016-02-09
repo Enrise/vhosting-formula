@@ -24,10 +24,28 @@ include:
 
 {%- if webserver == 'nginx' and not disable_webserver %}
 # Re-configure PHP-FPM to allow multiple pools to be used
-/usr/local/zend/etc/fpm.d:
-  file.directory:
-  - require:
-    - pkg: zendserver
+extend:
+  /usr/local/zend/etc/fpm.d:
+    file.directory:
+    - require:
+      - pkg: zendserver
+
+  # Ensure the socket directory exists
+  /usr/local/zend/tmp:
+    file.directory:
+      - require:
+        - pkg: zendserver
+
+  # Extend service to depend on ZS specifics
+  php5-fpm:
+    service.running:
+      - enable: True
+      - reload: True
+      - require:
+        - pkg: zendserver
+        - file: /usr/local/zend/etc/fpm.d
+        - file: /etc/init.d/php5-fpm
+        - file: /usr/local/zend/etc/php-fpm.conf
 
 /usr/local/zend/etc/php-fpm.conf:
   file.uncomment:
@@ -38,22 +56,6 @@ include:
     - watch_in:
       - service: zendserver
 
-# Ensure the socket directory exists
-/usr/local/zend/tmp:
-  file.directory:
-    - require:
-      - pkg: zendserver
-
-# this is not very DRY but since we cannot *extend*
-php5-fpm:
-  service.running:
-    - enable: True
-    - reload: True
-    - require:
-      - pkg: zendserver
-      - file: /usr/local/zend/etc/fpm.d
-      - file: /etc/init.d/php5-fpm
-      - file: /usr/local/zend/etc/php-fpm.conf
 {%- endif %}
 
 # Zend-server is ... a service. This is not included in the Zendserver formula (yet)

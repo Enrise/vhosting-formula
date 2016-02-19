@@ -24,18 +24,18 @@ include:
 
 {%- if webserver == 'nginx' and not disable_webserver %}
 # Re-configure PHP-FPM to allow multiple pools to be used
-extend:
-  /usr/local/zend/etc/fpm.d:
-    file.directory:
+/usr/local/zend/etc/fpm.d:
+  file.directory:
+  - require:
+    - pkg: zendserver
+
+# Ensure the socket directory exists
+/usr/local/zend/tmp:
+  file.directory:
     - require:
       - pkg: zendserver
 
-  # Ensure the socket directory exists
-  /usr/local/zend/tmp:
-    file.directory:
-      - require:
-        - pkg: zendserver
-
+extend:
   # Extend service to depend on ZS specifics
   php5-fpm:
     service.running:

@@ -23,8 +23,23 @@ include:
 {%- endif %}
 
 {%- if webserver == 'nginx' and not disable_webserver %}
-# Re-configure PHP-FPM to allow multiple pools to be used
+## Re-configure PHP-FPM to allow multiple pools to be used
+
+{% if salt['pillar.get']('phpfpm:php_versions', [])|length > 0 %}
+/usr/local/zend/etc/fpm.d:
+  file.directory:
+  - require:
+    - pkg: zendserver
+
+# Ensure the socket directory exists
+/usr/local/zend/tmp:
+  file.directory:
+    - require:
+      - pkg: zendserver
+{%- endif %}
+
 extend:
+  {% if salt['pillar.get']('phpfpm:php_versions', [])|length > 0 %}
   /usr/local/zend/etc/fpm.d:
     file.directory:
     - require:
@@ -35,6 +50,7 @@ extend:
     file.directory:
       - require:
         - pkg: zendserver
+  {%- endif %}
 
   # Extend service to depend on ZS specifics
   php5-fpm:

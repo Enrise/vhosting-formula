@@ -36,32 +36,28 @@ include:
   file.directory:
     - require:
       - pkg: zendserver
+
+#php5-fpm:
+#  service.running:
+#    - enable: True
+#    - reload: True
+#    - require:
+#      - pkg: zendserver
+#      - file: /usr/local/zend/etc/fpm.d
+#      - file: /etc/init.d/php5-fpm
+#      - file: /usr/local/zend/etc/php-fpm.conf
+{%- else %}
+#extend:
+#  php5-fpm:
+#    service.running:
+#      - enable: True
+#      - reload: True
+#      - require:
+#        - pkg: zendserver
+#        - file: /usr/local/zend/etc/fpm.d
+#        - file: /etc/init.d/php5-fpm
+#        - file: /usr/local/zend/etc/php-fpm.conf
 {%- endif %}
-
-extend:
-  {% if salt['pillar.get']('phpfpm:php_versions', [])|length > 0 %}
-  /usr/local/zend/etc/fpm.d:
-    file.directory:
-    - require:
-      - pkg: zendserver
-
-  # Ensure the socket directory exists
-  /usr/local/zend/tmp:
-    file.directory:
-      - require:
-        - pkg: zendserver
-  {%- endif %}
-
-  # Extend service to depend on ZS specifics
-  php5-fpm:
-    service.running:
-      - enable: True
-      - reload: True
-      - require:
-        - pkg: zendserver
-        - file: /usr/local/zend/etc/fpm.d
-        - file: /etc/init.d/php5-fpm
-        - file: /usr/local/zend/etc/php-fpm.conf
 
 /usr/local/zend/etc/php-fpm.conf:
   file.uncomment:
@@ -71,7 +67,6 @@ extend:
       - pkg: zendserver
     - watch_in:
       - service: zendserver
-
 {%- endif %}
 
 # Zend-server is ... a service. This is not included in the Zendserver formula (yet)
@@ -84,17 +79,17 @@ extend:
 #    - require:
 #      - pkg: zendserver
 
-{%- if disable_webserver %}
-# Stop & disable the webserver
-extend:
-  {{ webserver }}:
-    service:
-      - disabled
-
-kill_webserver:
-  service.dead:
-    - name: {{ webserver }}
-
+#{%- if disable_webserver %}
+## Stop & disable the webserver
+#extend:
+#  {{ webserver }}:
+#    service:
+#      - disabled
+#
+#kill_webserver:
+#  service.dead:
+#    - name: {{ webserver }}
+#
 #php5-fpm:
 #  service:
 #    - disabled
@@ -102,7 +97,7 @@ kill_webserver:
 #kill_fpm:
 #  service.dead:
 #    - name: php5-fpm
-{%- endif %}
+#{%- endif %}
 
 {%- if not enable_zray %}
 # Disable ZRay

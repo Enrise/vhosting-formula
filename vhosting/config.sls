@@ -30,7 +30,7 @@ php_config:
 
 php_config-{{php_version}}:
   file.managed:
-    - name: /etc/php/{{php_version}}/etc/conf.d/zzz_custom.ini' }}
+    - name: /etc/php/{{php_version}}/etc/conf.d/zzz_custom.ini'
     - source: 'salt://vhosting/templates/php.ini.jinja'
     - template: jinja
     - context:

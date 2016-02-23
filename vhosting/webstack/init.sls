@@ -5,11 +5,11 @@
 {%- set webroot_base = salt['pillar.get']('vhosting:server:basedir', '/srv/http') %}
 
 include:
-  - .{{webserver_edition}}
   - .grains
   {% if webserver == 'nginx' and install_phpfpm == True -%}
   - phpfpm
-  {% endif -%}
+  {% endif -%}  
+  - .{{webserver_edition}}
 
 # Create base root for vhosts
 webroot_base:

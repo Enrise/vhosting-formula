@@ -42,12 +42,8 @@ php_cli_config-{{php_version}}:
   file.symlink:
     - name: /etc/php/{{php_version}}/cli/conf.d/zzz_custom.ini
     - target: /etc/php/{{php_version}}/fpm/conf.d/zzz_custom.ini
-    - watch_in:
-      {%- if webserver == 'nginx' %}
-      - service: php{{php_version}}-fpm
-      {%- else %}
-      - service: {{ webserver }}
-      {% endif -%}
+    - require:
+      - file: php_config-{{php_version}}
 
 {% endfor %} # End 'for php_version in php_versions'
 

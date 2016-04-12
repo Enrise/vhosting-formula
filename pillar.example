@@ -22,7 +22,7 @@ vhosting:
         # The domain, without www and must be unique troughout this configuration
         example.com:
           # The docroot is by default /srv/http/USER/domains/DOMAIN but can be overruled
-          webroot: /srv/http/example/domains/example.com
+          webroot: /var/www
 
         morecontrol.eu:
           # This vhost wants to provide its own template

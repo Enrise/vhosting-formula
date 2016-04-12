@@ -24,9 +24,6 @@ vhosting:
           # The docroot is by default /srv/http/USER/domains/DOMAIN but can be overruled
           webroot: /srv/http/example/domains/example.com
 
-        example.net: {}
-          # No settings here, uses the complete defaults
-
         morecontrol.eu:
           # This vhost wants to provide its own template
           template_file: salt://vhosting/templates/minimal.tmpl
@@ -74,8 +71,11 @@ vhosting:
           minute: 0
           cmd: '/srv/http/example/domains/example.com/scripts/db-backup.sh'
 
+# Another user with their own vhosts
     otheruser:
-      vhosts:
-        # The unique domain
+      vhost:
         otherdomain.eu:
+          deploy_structure: True
         moredomains.com:
+          aliases:
+            - get-more-domains.now

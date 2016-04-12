@@ -8,7 +8,7 @@ env:
     - BS_ECHO_DEBUG=1
     - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar --file-root=$PWD"
   matrix:
-    - STATE=vhosting
+    - STATE=vhosting.travis,vhosting
 
 before_install:
   - sudo apt-get update
@@ -25,8 +25,8 @@ install:
   - sudo git clone https://github.com/enrise/nginx-formula.git $PWD/nginx-formula && ln -sfn $PWD/nginx-formula/nginx $PWD/nginx
   - sudo git clone https://github.com/enrise/phpfpm-formula.git $PWD/phpfpm-formula && ln -sfn $PWD/phpfpm-formula/phpfpm $PWD/phpfpm
   - sudo git clone https://github.com/enrise/mariadb-formula.git $PWD/mariadb-formula && ln -sfn $PWD/mariadb-formula/mariadb $PWD/mariadb
-  #- sudo git clone https://github.com/enrise/apache-formula.git $PWD/apache-formula && ln -sfn $PWD/apache-formula/nginx $PWD/apache
-  #- sudo git clone https://github.com/enrise/zendserver-formula.git $PWD/zendserver-formula && ln -sfn $PWD/zendserver-formula/nginx $PWD/zendserver
+  #- sudo git clone https://github.com/enrise/apache-formula.git $PWD/apache-formula && ln -sfn $PWD/apache-formula/apache $PWD/apache
+  #- sudo git clone https://github.com/enrise/zendserver-formula.git $PWD/zendserver-formula && ln -sfn $PWD/zendserver-formula/zendserver $PWD/zendserver
   - ls -alh $PWD
 
 script:

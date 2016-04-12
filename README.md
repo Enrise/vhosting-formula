@@ -1,6 +1,7 @@
 # Enrise Vhosting Formula
 
 [![Documentation](https://readthedocs.org/projects/vhosting-formula/badge/?version=master)](http://vhosting-formula.readthedocs.org/)
+[![Travis branch](https://img.shields.io/travis/Enrise/vhosting-formula/master.svg?style=flat-square)](https://travis-ci.org/Enrise/vhosting-formula)
 
 This Saltstack formula takes care of provisioning your webstack, creates vhosts and databases and serves as an extendable base.
 

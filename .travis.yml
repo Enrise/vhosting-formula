@@ -14,7 +14,7 @@ before_install:
   - sudo apt-get update
   # Temporary workaround for vhosting-formula#1
   - sudo mkdir -p /etc/salt/minion.d
-  - echo "mysql.default_file:'/etc/mysql/debian.cnf'" | sudo tee -a /etc/salt/minion.d/mysql.conf
+  - echo "mysql.default_file:" "'/etc/mysql/debian.cnf'" | sudo tee -a /etc/salt/minion.d/mysql.conf
   # End of workaround
   - curl -L http://bootstrap.saltstack.org | sudo -E sh -s -- stable
   # Cleanup Travis' MySQL leftovers as they conflict with the MariaDB clean install

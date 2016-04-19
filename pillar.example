@@ -24,10 +24,10 @@ vhosting:
           # The docroot is by default /srv/http/USER/domains/DOMAIN but can be overruled
           webroot: /var/www
 
-        morecontrol.eu:
-          # This vhost wants to provide its own template
-          template_file: salt://vhosting/templates/minimal.tmpl
-          #template_engine: jinja # default
+        #morecontrol.eu:
+        #  # This vhost wants to provide its own template
+        #  template_file: salt://vhosting/templates/minimal.tmpl
+        #  #template_engine: jinja # default
 
         example.org:
           # This vhost follows the defaults, but does have a few additional HTTP aliases

@@ -1,5 +1,5 @@
 # Create a vhost for the given webservers
-{% macro create(salt, baseconf, owner, params, name) %}
+{% macro create(salt, baseconf, username, params, name) %}
 {%- from "vhosting/lib.sls" import path_join, sls_block with context %}
 {%- set domain = name|lower %}
 {%- set domain_safe = domain|replace('.','_') %}
@@ -14,7 +14,7 @@
 {%- set webserver_edition = vhosting_server.get('webserver_edition', 'vanilla') %}
 {%- set vhost_template_path = 'salt://' ~ webserver ~ '/templates' %}
 
-{%- set homedir = path_join(owner, webroot_base) %}
+{%- set homedir = path_join(username, webroot_base) %}
 {%- set priority = params.get('priority', 50) %}
 {%- set webroot = params.get('webroot', homedir ~ '/hosts/' ~ name ) %}
 {%- set logdir = params.get('logdir', homedir ~ '/logs' ) %}
@@ -24,7 +24,7 @@
 
 {%- set vhost_file_available = baseconf.get('sites_available') ~ '/' ~ domain_safe ~ '.conf' %}
 {%- set vhost_file_enabled = baseconf.get('sites_enabled') ~ '/' ~ priority ~ '-' ~ domain_safe ~ '.conf' %}
-{%- set deploy_structure = salt['pillar.get']('vhosting:users:' ~ owner ~ ':deploy_structure', False) %}
+{%- set deploy_structure = salt['pillar.get']('vhosting:users:' ~ username ~ ':deploy_structure', False) %}
 
 {%- if 'redirect_to' in params %}
 # Redirect vhost, no need for directory structure etc
@@ -46,17 +46,17 @@
     {%- else %}
     - target: '../current'
     {%- endif %}
-    - user: {{ owner }}
-    - group: {{ owner }}
+    - user: {{ username }}
+    - group: {{ username }}
 {%- else %}
 # Ensure the homedirectory exists
 {{ webroot }}:
   file.directory:
-    - user: {{ owner }}
-    - group: {{ owner }}
+    - user: {{ username }}
+    - group: {{ username }}
     - require:
       - file: {{ homedir }}/hosts
-      - user: {{ owner }}
+      - user: {{ username }}
 {%- endif %}
 ############################################################################################################################
 
@@ -76,7 +76,7 @@
   {%- set phpfpm_socket_dir = "/etc/php/" ~ php_version ~ "/tmp" %}
 {%- endif %}
 
-{{ create_pool(salt, domain_safe, owner, phpfpm_pool_dir, phpfpm_socket_dir, phpfpm_template, phpfpm_params, php_version) }}
+{{ create_pool(salt, domain_safe, username, phpfpm_pool_dir, phpfpm_socket_dir, phpfpm_template, phpfpm_params, php_version) }}
 {%- endif %}
 ############################################################################################################################
 
@@ -100,7 +100,7 @@
     - service: {{ webserver }}
   - require:
     - pkg: {{ webserver }}
-    - user: {{ owner }}
+    - user: {{ username }}
   {% if webserver == 'nginx' and salt['pillar.get']('nginx:config:dhparam', False) %}
     - cmd: generate_dhparam
   {%- endif %}
@@ -110,7 +110,7 @@
   - webroot: {{ webroot }}
   {%- endif %}
   - logdir: {{ logdir }}
-  - owner: {{ owner }}
+  - vhost_user: {{ username }}
   - domain: {{ domain }}
   - user: root
   - group: root

@@ -1,4 +1,6 @@
-# Vhosting configuration overlay
+###
+# Testing: Nginx @ Vanilla
+###
 vhosting:
   server:
     webserver: nginx

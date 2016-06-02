@@ -6,9 +6,12 @@ env:
   global:
     - BS_PIP_ALLOWED=1
     - BS_ECHO_DEBUG=1
-    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar --file-root=$PWD"
-  matrix:
     - STATE=vhosting.travis,vhosting
+  matrix:
+    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/vanilla-apache --file-root=$PWD"
+    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/vanilla-nginx --file-root=$PWD"
+    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/zendserver-apache --file-root=$PWD"
+    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/zendserver-nginx --file-root=$PWD"
 
 before_install:
   - sudo apt-get update
@@ -32,9 +35,8 @@ install:
   - sudo git clone https://github.com/enrise/nginx-formula.git $PWD/nginx-formula && ln -sfn $PWD/nginx-formula/nginx $PWD/nginx
   - sudo git clone https://github.com/enrise/phpfpm-formula.git $PWD/phpfpm-formula && ln -sfn $PWD/phpfpm-formula/phpfpm $PWD/phpfpm
   - sudo git clone https://github.com/enrise/mariadb-formula.git $PWD/mariadb-formula && ln -sfn $PWD/mariadb-formula/mariadb $PWD/mariadb
-  # We don't use these ones in the pillar.example so no need for checkouts either.
-  #- sudo git clone https://github.com/enrise/apache-formula.git $PWD/apache-formula && ln -sfn $PWD/apache-formula/apache $PWD/apache
-  #- sudo git clone https://github.com/enrise/zendserver-formula.git $PWD/zendserver-formula && ln -sfn $PWD/zendserver-formula/zendserver $PWD/zendserver
+  - sudo git clone https://github.com/enrise/apache-formula.git $PWD/apache-formula && ln -sfn $PWD/apache-formula/apache $PWD/apache
+  - sudo git clone https://github.com/enrise/zendserver-formula.git $PWD/zendserver-formula && ln -sfn $PWD/zendserver-formula/zendserver $PWD/zendserver
 
 script:
   - sudo -E salt-call state.show_sls $STATE $SALT_ARGS

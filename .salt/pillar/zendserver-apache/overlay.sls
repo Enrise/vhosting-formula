@@ -11,7 +11,7 @@ vhosting:
     sites_enabled: '/etc/apache2/sites-enabled'
   server:
     webserver: apache
-    edition: zendserver
+    webserver_edition: zendserver
 
 # ZendServer settings
 zendserver:

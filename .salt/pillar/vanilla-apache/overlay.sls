@@ -13,4 +13,4 @@ vhosting:
     sites_enabled: '/etc/apache2/sites-enabled'
   server:
     webserver: apache
-    edition: vanilla
+    webserver_edition: vanilla

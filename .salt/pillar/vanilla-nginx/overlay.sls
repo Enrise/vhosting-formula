@@ -4,4 +4,4 @@
 vhosting:
   server:
     webserver: nginx
-    edition: vanilla
+    webserver_edition: vanilla

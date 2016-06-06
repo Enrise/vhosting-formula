@@ -5,7 +5,7 @@
 {%- set php_versions = salt['pillar.get']('phpfpm:php_versions', []) %}
 
 {%- if php_config %}
-{% if php_versions|length == 0 or salt['pillar.get']('vhosting:server:webserver_edition','vanilla') == 'zendserver' %}
+{% if php_versions|length == 0 %}
 # Vanilla Ubuntu 14.04 packages, see phpfpm formula README for more info.
 php_config:
   file.managed:

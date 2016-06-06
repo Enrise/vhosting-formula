@@ -13,50 +13,24 @@ include:
 {%- endif %}
 {%- endif %}
 
-{%- if webserver == 'nginx' %}
-# Symlink php-fpm as an init script (only required for nginx+fpm)
-/etc/init.d/php5-fpm:
-  file.symlink:
-    - target: /usr/local/zend/bin/php-fpm.sh
-    - require:
-      - pkg: zendserver
-{%- endif %}
-
 {%- if webserver == 'nginx' and not disable_webserver %}
 ## Re-configure PHP-FPM to allow multiple pools to be used
-
 {% if salt['pillar.get']('phpfpm:php_versions', [])|length > 0 %}
-/usr/local/zend/etc/fpm.d:
-  file.directory:
-  - require:
-    - pkg: zendserver
-
-# Ensure the socket directory exists
-/usr/local/zend/tmp:
-  file.directory:
+php5-fpm:
+  service.running:
+    - enable: True
+    - reload: True
     - require:
-      - pkg: zendserver
-
-#php5-fpm:
-#  service.running:
-#    - enable: True
-#    - reload: True
-#    - require:
-#      - pkg: zendserver
-#      - file: /usr/local/zend/etc/fpm.d
-#      - file: /etc/init.d/php5-fpm
-#      - file: /usr/local/zend/etc/php-fpm.conf
+      - file: /usr/local/zend/etc/fpm.d
+      - file: /usr/local/zend/etc/php-fpm.conf
 {%- else %}
-#extend:
-#  php5-fpm:
-#    service.running:
-#      - enable: True
-#      - reload: True
-#      - require:
-#        - pkg: zendserver
-#        - file: /usr/local/zend/etc/fpm.d
-#        - file: /etc/init.d/php5-fpm
-#        - file: /usr/local/zend/etc/php-fpm.conf
+extend:
+  php5-fpm:
+    service.running:
+      - enable: True
+      - reload: True
+      - require:
+        - file: /usr/local/zend/etc/php-fpm.conf
 {%- endif %}
 
 /usr/local/zend/etc/php-fpm.conf:

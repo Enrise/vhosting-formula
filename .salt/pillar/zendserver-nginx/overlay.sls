@@ -10,8 +10,9 @@ vhosting:
 
 phpfpm:
   lookup:
-    config: /usr/local/zend/etc/fpm.d
-    socket: /usr/local/zend/tmp
+    dirs:
+      config: /usr/local/zend/etc/fpm.d
+      socket: /usr/local/zend/tmp
 
 # ZendServer settings
 zendserver:

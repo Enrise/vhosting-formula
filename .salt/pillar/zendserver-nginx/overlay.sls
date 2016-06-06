@@ -8,6 +8,11 @@ vhosting:
     webserver: nginx
     webserver_edition: zendserver
 
+phpfpm:
+  lookup:
+    config: /usr/local/zend/etc/fpm.d
+    socket: /usr/local/zend/tmp
+
 # ZendServer settings
 zendserver:
   version:

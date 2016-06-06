@@ -16,9 +16,9 @@ vhosting:
 # ZendServer settings
 zendserver:
   version:
-    zend: '8.5'
+    zend: '8.0'
     php: '5.6'
-    apache: '2.2' # Travis uses Ubuntu 12.04 so Apache 2.2
+    apache: '2.2' # Travis still uses Ubuntu 12.04 so Apache 2.2
 
   # Which webserver to use, can either be apache or nginx
   webserver: apache

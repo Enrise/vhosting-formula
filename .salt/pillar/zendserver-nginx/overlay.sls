@@ -11,7 +11,7 @@ vhosting:
 # ZendServer settings
 zendserver:
   version:
-    zend: '8.5'
+    zend: '8.0'
     php: '5.6'
 
   # Which webserver to use, can either be apache or nginx

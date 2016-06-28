@@ -15,7 +15,7 @@
 {{ root ~ '/' ~ file }}
 {%- endmacro %}
 
-{% macro call_macro(salt, baseconf={}, owner, macro, params={}, name=None) %}
+{% macro call_macro(salt, baseconf={}, owner=None, macro=None, params={}, name=None) %}
 {% from "vhosting/resources/" ~ macro ~ '.sls' import create %}
 {% if name %}
 {{ create(salt, baseconf, owner, params, name) }}

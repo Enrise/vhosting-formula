@@ -10,6 +10,7 @@ def run():
         packages.append('vhosting.webstack')
       if 'mysql_database' in user_services:
         packages.append('mariadb')
+        packages.append('mariadb.server.salt')
 
     if __salt__['pillar.get']('vhosting:server:force_install_webstack', False) == True:
       packages.append('vhosting.webstack')

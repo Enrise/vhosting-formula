@@ -78,7 +78,14 @@ The following keys can be defined:
 **redirect\_to**
 
 >   A string which will - if set - redirect the domain to the given URL
->    and uses the `redirect` vhost.
+>    and uses the `redirect` vhost template.
+
+> This may be used in conjunction with `ssl`
+
+**proxy\_pass**
+
+>   A string which will - if set - setup the webserver to proxy the domain to
+>    the given URL and uses the `proxy` vhost template.
 
 > This may be used in conjunction with `ssl`
 

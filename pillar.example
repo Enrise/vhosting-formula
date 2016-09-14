@@ -39,6 +39,10 @@ vhosting:
           # This is a 'redirect vhost' which is just sending traffic to a different domain. Its vhost is very simple
           redirect_to: 'http://www.example.com'
 
+        proxyme.com:
+          # This is a 'proxy vhost' which is just sending traffic to a different domain but masks the destination
+          proxy_pass: 'http://www.example.com'
+
         #secured-site.com:
         #  # This vhost follows the defaults but does have forced SSL
         #  ssl:

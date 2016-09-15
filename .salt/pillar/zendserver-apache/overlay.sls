@@ -23,3 +23,11 @@ zendserver:
   # Which webserver to use, can either be apache or nginx
   webserver: apache
   bootstrap: False
+
+# Apache
+apache:
+  modules_enabled:
+    - ssl
+    - rewrite
+    - proxy
+    - proxy_http

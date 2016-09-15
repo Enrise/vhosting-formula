@@ -29,6 +29,9 @@
 {%- if 'redirect_to' in params %}
 # Redirect vhost, no need for directory structure etc
 {%- set template_file = params.get('template_file', vhost_template_path ~ '/redirect.conf.jinja') %}
+{%- elif 'proxy_pass' in params %}
+# Proxy vhost, no need for directory structure etc
+{%- set template_file = params.get('template_file', vhost_template_path ~ '/proxy.conf.jinja') %}
 {%- else %}
 # Normal vhost, required folders
 {%- set template_file = params.get('template_file', vhost_template_path ~ '/default.conf.jinja') %}

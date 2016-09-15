@@ -14,3 +14,11 @@ vhosting:
   server:
     webserver: apache
     webserver_edition: vanilla
+
+# Apache
+apache:
+  modules_enabled:
+    - ssl
+    - rewrite
+    - proxy
+    - proxy_http

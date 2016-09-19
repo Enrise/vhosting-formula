@@ -15,30 +15,14 @@ include:
 
 {%- if webserver == 'nginx' and not disable_webserver %}
 ## Re-configure PHP-FPM to allow multiple pools to be used
-{% if salt['pillar.get']('phpfpm:php_versions', [])|length > 0 %}
-php5-fpm:
-  service.running:
-    - enable: True
-    - reload: True
-    - require:
-      - file: /usr/local/zend/etc/fpm.d
-      - file: /usr/local/zend/etc/php-fpm.conf
-{%- else %}
-extend:
-  php5-fpm:
-    service.running:
-      - enable: True
-      - reload: True
-      - require:
-        - file: /usr/local/zend/etc/php-fpm.conf
-{%- endif %}
-
 /usr/local/zend/etc/php-fpm.conf:
   file.uncomment:
     - regex: ^include=etc
     - char: ;
     - require:
       - pkg: zendserver
+    - require_in:
+      - service: php5-fpm
     - watch_in:
       - service: zendserver
 {%- endif %}

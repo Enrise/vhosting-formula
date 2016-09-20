@@ -25,6 +25,20 @@ include:
       - service: php5-fpm
     - watch_in:
       - service: zendserver
+
+/usr/local/zend/etc/fpm.d:
+  file.directory:
+    - require:
+      - pkg: zendserver
+    - require_in:
+      - file: /usr/local/zend/etc/php-fpm.conf
+
+/usr/local/zend/tmp:
+  file.directory:
+    - require:
+      - pkg: zendserver
+    - require_in:
+      - file: /usr/local/zend/etc/fpm.d
 {%- endif %}
 
 # Zend-server is ... a service. This is not included in the Zendserver formula (yet)

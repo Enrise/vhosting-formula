@@ -2,6 +2,7 @@
 {%- set webserver = salt['pillar.get']('vhosting:server:webserver', 'nginx') %}
 {%- set disable_webserver = salt['pillar.get']('vhosting:server:config:disable_webserver', False) %}
 {%- set enable_zray = salt['pillar.get']('vhosting:server:config:zendserver:enable_zray', False) %}
+{%- set php_versions = salt['pillar.get']('phpfpm:php_versions', []) %}
 
 include:
   - zendserver

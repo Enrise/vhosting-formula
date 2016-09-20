@@ -26,6 +26,9 @@ include:
     - watch_in:
       - service: zendserver
 
+{% if php_versions|length > 0 %}
+# The PHP-FPM formula only creates these folders if only the "default" PHP stack
+#  is being used, not if multiple co-exist (in combination with ZS).
 /usr/local/zend/etc/fpm.d:
   file.directory:
     - require:
@@ -39,6 +42,7 @@ include:
       - pkg: zendserver
     - require_in:
       - file: /usr/local/zend/etc/fpm.d
+{%- endif %}
 {%- endif %}
 
 # Zend-server is ... a service. This is not included in the Zendserver formula (yet)

@@ -2,6 +2,7 @@
 {%- set webserver = salt['pillar.get']('vhosting:server:webserver', 'nginx') %}
 {%- set disable_webserver = salt['pillar.get']('vhosting:server:config:disable_webserver', False) %}
 {%- set enable_zray = salt['pillar.get']('vhosting:server:config:zendserver:enable_zray', False) %}
+{%- set php_versions = salt['pillar.get']('phpfpm:php_versions', []) %}
 
 include:
   - zendserver
@@ -25,6 +26,24 @@ include:
       - service: php5-fpm
     - watch_in:
       - service: zendserver
+
+{% if php_versions|length > 0 %}
+# The PHP-FPM formula only creates these folders if only the "default" PHP stack
+#  is being used, not if multiple co-exist (in combination with ZS).
+/usr/local/zend/etc/fpm.d:
+  file.directory:
+    - require:
+      - pkg: zendserver
+    - require_in:
+      - file: /usr/local/zend/etc/php-fpm.conf
+
+/usr/local/zend/tmp:
+  file.directory:
+    - require:
+      - pkg: zendserver
+    - require_in:
+      - file: /usr/local/zend/etc/fpm.d
+{%- endif %}
 {%- endif %}
 
 # Zend-server is ... a service. This is not included in the Zendserver formula (yet)

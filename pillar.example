@@ -6,6 +6,9 @@ vhosting:
     webserver: nginx
     # Which edition of the webserver to use. Currently supported: vanilla & zendserver
     edition: vanilla
+
+    # Enable LetsEncrypt support
+    #letsencrypt: True
   config:
     php:
       # Put in the section names (if required) and insert the config like so:
@@ -43,14 +46,31 @@ vhosting:
           # This is a 'proxy vhost' which is just sending traffic to a different domain but masks the destination
           proxy_pass: 'http://www.example.com'
 
-        #secured-site.com:
-        #  # This vhost follows the defaults but does have forced SSL
+        #ssl-site.com:
         #  ssl:
         #    # The configuration for SSL for this vhost
         #    key: securedsite.key
         #    cert: securedsite.pem
         #    ca: rapidssl_chain.pem
         #    forward: True
+
+        #ssl-site-with-http2.com:
+        #  ssl:
+        #    # The configuration for SSL for this vhost
+        #    key: securedsite2.key
+        #    cert: securedsite2.pem
+        #    ca: comodo_chain.pem
+        #    forward: True
+        #    http2: True
+
+        #ssl-site-via-letsencrypt.com:
+        #  ssl:
+        #    # The configuration for SSL for this vhost
+        #    key: site-letsencrypt.key
+        #    cert: site-letsencrypt.pem
+        #    forward: True
+        #    http2: True
+        #    letsencrypt: True
 
         # Default vhost with special directory structure
         deployable.com:

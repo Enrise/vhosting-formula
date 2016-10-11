@@ -1,7 +1,50 @@
 # Deal with SSL
 {% macro install_pair(salt, domain, config) %}
 {%- set webserver = salt['pillar.get']('vhosting:server:webserver', 'nginx') %}
+{%- if 'letsencrypt' in config and config.letsencrypt == true %}
+{% from "letsencrypt/map.jinja" import letsencrypt with context %}
+# Call LetsEncrypt to get an SSL certificate
+create-initial-cert-{{ domain }}:
+  cmd.run:
+    - unless: /usr/local/bin/check_letsencrypt_cert.sh {{ domain }}
+    - name: {{ letsencrypt.cli_install_dir }}/letsencrypt-auto -d {{ domain }} certonly
+    - cwd: {{ letsencrypt.cli_install_dir }}
+    - require:
+      - file: letsencrypt-config
+      - file: /usr/local/bin/check_letsencrypt_cert.sh
 
+# Create the files based on the letsencrypt
+ssl_cert_{{domain}}:
+  file.symlink:
+    - name: /etc/ssl/certs/{{ config.cert }}
+    - target: /etc/letsencrypt/live/{{ domain }}/fullchain.pem
+    - watch_in:
+      - service: {{ webserver }}
+    - watch:
+      - cmd: create-initial-cert-{{ domain }}
+
+ssl_key_{{domain}}:
+  file.symlink:
+    - name: /etc/ssl/private/{{ config.key }}
+    - target: /etc/letsencrypt/live/{{ domain }}/private.pem
+    - watch_in:
+      - service: {{ webserver }}
+    - watch:
+      - cmd: create-initial-cert-{{ domain }}
+
+# Register a cronjob to auto-renew this certificate every 60 days
+letsencrypt-crontab-{{ domain }}:
+  cron.present:
+    - name: /usr/local/bin/renew_letsencrypt_cert.sh {{ domain }}
+    - month: '*'
+    - minute: random
+    - hour: random
+    - dayweek: '*'
+    - identifier: letsencrypt-{{ domain }}
+    - require:
+      - cmd: create-initial-cert-{{ domain }}
+      - file: /usr/local/bin/renew_letsencrypt_cert.sh
+{%- else %}
 # SSL Certificate: {{ config.cert }}
 ssl_cert_{{domain}}:
   file.managed:
@@ -27,4 +70,6 @@ ssl_key_{{domain}}:
     - source: salt://ssl/{{ config.key }}
     - watch_in:
       - service: {{ webserver }}
+
+{%- endif %} #letsencrypt check
 {% endmacro %}

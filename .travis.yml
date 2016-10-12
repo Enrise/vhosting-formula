@@ -23,6 +23,9 @@ before_install:
   # Cleanup Travis' MySQL leftovers as they conflict with the MariaDB clean install
   - sudo apt-get purge mysql-common mysql-server mysql-client
   - sudo rm /etc/mysql /var/lib/mysql /var/log/mysql -rf
+  # Generate SSL certificate for testing this part of the state
+  - sudo mkdir -p $PWD/ssl
+  - sudo openssl req -x509 -nodes -days 3650 -subj '/C=NL/ST=Utrecht/L=Amersfoort/O=Enrise/CN=ssl-demo.example' -newkey rsa:2048 -keyout $PWD/ssl/ssl-demo.example.key -out $PWD/ssl/ssl-demo.example.pem
 
 install:
   - sudo mkdir -p /srv && sudo ln -sfn $PWD /srv/formula

@@ -14,7 +14,7 @@ create-initial-cert-{{ domain }}:
       - file: /usr/local/bin/check_letsencrypt_cert.sh
 
 # Create the files based on the letsencrypt
-ssl_cert_{{domain}}:
+ssl_cert_{{ domain }}:
   file.symlink:
     - name: /etc/ssl/certs/{{ config.cert }}
     - target: /etc/letsencrypt/live/{{ domain }}/fullchain.pem
@@ -23,10 +23,10 @@ ssl_cert_{{domain}}:
     - watch:
       - cmd: create-initial-cert-{{ domain }}
 
-ssl_key_{{domain}}:
+ssl_key_{{ domain }}:
   file.symlink:
     - name: /etc/ssl/private/{{ config.key }}
-    - target: /etc/letsencrypt/live/{{ domain }}/private.pem
+    - target: /etc/letsencrypt/live/{{ domain }}/privkey.pem
     - watch_in:
       - service: {{ webserver }}
     - watch:
@@ -46,7 +46,7 @@ letsencrypt-crontab-{{ domain }}:
       - file: /usr/local/bin/renew_letsencrypt_cert.sh
 {%- else %}
 # SSL Certificate: {{ config.cert }}
-ssl_cert_{{domain}}:
+ssl_cert_{{ domain }}:
   file.managed:
     - name: /etc/ssl/certs/{{ config.cert }}
     - source: salt://ssl/{{ config.cert }}
@@ -55,7 +55,7 @@ ssl_cert_{{domain}}:
 
 {%- if 'ca' in config %}
 # SSL CA: {{ config.ca }}
-ssl_chain_{{domain}}:
+ssl_chain_{{ domain }}:
   file.managed:
     - name: /etc/ssl/certs/{{ config.ca }}
     - source: salt://ssl/{{ config.ca }}
@@ -64,7 +64,7 @@ ssl_chain_{{domain}}:
 {%- endif %}
 
 # SSL key: {{ config.key }}
-ssl_key_{{domain}}:
+ssl_key_{{ domain }}:
   file.managed:
     - name: /etc/ssl/private/{{ config.key }}
     - source: salt://ssl/{{ config.key }}

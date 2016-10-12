@@ -22,6 +22,8 @@ vhosting:
 >     Pillar data is missing it will install it with default values
 >     which may differ from your requirements.
 
+> If `letsencrypt` is being used, the official `letsencrypt` formula should be installed as well.
+
 ### Users
 
 A user is only created when a ‘vhost’ is set, since this the only reason
@@ -95,6 +97,9 @@ The following keys can be defined:
 >    for the CA chain (required for certain SSL providers), boolean
 >    `forward` to force non-ssl to SSL and boolean `spdy` to enable SPDY
 >    mode (if a compatible webserver is being used).
+
+>   Setting "letsencrypt" to "True" results in automatically retrieve and renew
+>   a certificate for this domain via LetsEncrypt
 
 **listen\_ip**
 
@@ -211,3 +216,4 @@ If both the global PHP-FPM versions and the per vhost configuration are omitted,
 #### Some warnings
 * It is not possible to use PHP-FPM 5.5 together with either 5.6 or 7.0, as 5.6 will remove 5.5 and the formula does not manage 7.0 alongside 5.5.
 * If other packages depend on either the package or service php5-fpm, it is not possible to use PHP-FPM 5.6 or 7.0, because of the init script being renamed.
+* Support for native PHP7 (e.g. as provided in Ubuntu 16.04) is not yet implemented and requires the alternative versions setup to be used

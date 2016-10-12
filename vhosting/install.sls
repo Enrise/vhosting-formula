@@ -15,4 +15,7 @@ def run():
     if __salt__['pillar.get']('vhosting:server:force_install_webstack', False) == True:
       packages.append('vhosting.webstack')
 
+    if __salt__['pillar.get']('vhosting:server:letsencrypt', False) == True:
+      packages.append('vhosting.letsencrypt')
+
     return {'include': packages}

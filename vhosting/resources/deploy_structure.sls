@@ -17,4 +17,11 @@
     - group: {{ owner }}
     - require:
       - user: {{ owner }}
+
+{{ homedir }}/shared:
+  file.directory:
+    - user: {{ owner }}
+    - group: {{ owner }}
+    - require:
+      - user: {{ owner }}
 {%- endmacro %}

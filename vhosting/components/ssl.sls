@@ -3,13 +3,25 @@
 {%- set webserver = salt['pillar.get']('vhosting:server:webserver', 'nginx') %}
 {%- if 'letsencrypt' in config and config.letsencrypt == true %}
 {% from "letsencrypt/map.jinja" import letsencrypt with context %}
+
+## Test
+# {{ domain|list + aliases }}
+##
+
+# Generate a list with domain + aliases
+{%- set domainlist = [] %}
+{%- do domainlist.append(domain) %}
+{%- for alias in aliases %}
+{%- do domainlist.append(alias) %}
+{%- endfor %}
+
 # Call LetsEncrypt to get an SSL certificate for {{ domain }} (aliases: {{ aliases|join(', ') }})
 create-initial-cert-{{ domain }}:
   cmd.run:
-    - unless: /usr/local/bin/check_letsencrypt_cert.sh {{ domain }} {{ aliases|join(' ') }}
+    - unless: /usr/local/bin/check_letsencrypt_cert.sh {{ domainlist|join(' ') }}
     - name: {{
             letsencrypt.cli_install_dir
-            }}/letsencrypt-auto --quiet -d {{ domain }} {{ aliases|join(' -d ') }} certonly --non-interactive --allow-subset-of-names
+            }}/letsencrypt-auto --quiet -d {{ domainlist|join(' -d ') }} certonly --non-interactive --allow-subset-of-names
     - cwd: {{ letsencrypt.cli_install_dir }}
     - require:
       - file: letsencrypt-config
@@ -37,7 +49,7 @@ ssl_key_{{ domain }}:
 # Register a cronjob to auto-renew this certificate every 60 days
 letsencrypt-crontab-{{ domain }}:
   cron.present:
-    - name: /usr/local/bin/renew_letsencrypt_cert.sh {{ domain }} {{ aliases|join(' ') }}
+    - name: /usr/local/bin/renew_letsencrypt_cert.sh {{ domainlist|join(' ') }}
     - month: '*'
     - minute: random
     - hour: random

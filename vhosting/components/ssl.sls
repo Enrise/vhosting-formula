@@ -9,7 +9,7 @@ create-initial-cert-{{ domain }}:
     - unless: /usr/local/bin/check_letsencrypt_cert.sh {{ domain }} {{ aliases|join(' ') }}
     - name: {{
             letsencrypt.cli_install_dir
-            }}/letsencrypt-auto --quiet -d {{ domain }} {{ aliases|join(' -d ') }} certonly --non-interactive
+            }}/letsencrypt-auto --quiet -d {{ domain }} {{ aliases|join(' -d ') }} certonly --non-interactive --allow-subset-of-names
     - cwd: {{ letsencrypt.cli_install_dir }}
     - require:
       - file: letsencrypt-config

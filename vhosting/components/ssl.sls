@@ -3,11 +3,13 @@
 {%- set webserver = salt['pillar.get']('vhosting:server:webserver', 'nginx') %}
 {%- if 'letsencrypt' in config and config.letsencrypt == true %}
 {% from "letsencrypt/map.jinja" import letsencrypt with context %}
-# Call LetsEncrypt to get an SSL certificate
+# Call LetsEncrypt to get an SSL certificate for {{ domain }} (aliases: {{ aliases|join(', ') }})
 create-initial-cert-{{ domain }}:
   cmd.run:
     - unless: /usr/local/bin/check_letsencrypt_cert.sh {{ domain }} {{ aliases|join(' ') }}
-    - name: {{ letsencrypt.cli_install_dir }}/letsencrypt-auto -d {{ domain }} {{ aliases|join(' ') }} certonly
+    - name: {{
+            letsencrypt.cli_install_dir
+            }}/letsencrypt-auto --quiet -d {{ domain }} {{ aliases|join(' -d ') }} certonly --non-interactive
     - cwd: {{ letsencrypt.cli_install_dir }}
     - require:
       - file: letsencrypt-config

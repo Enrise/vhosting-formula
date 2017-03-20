@@ -3,6 +3,7 @@
 {%- from "vhosting/lib.sls" import path_join, sls_block with context %}
 {%- set domain = name|lower %}
 {%- set domain_safe = domain|replace('.','_') %}
+{%- set aliases = params.get('aliases', []) %}
 
 # grab all settings
 {%- set vhosting = salt['pillar.get']('vhosting') %}
@@ -89,7 +90,7 @@
 {%- if ssl is mapping %}
 # Install the required certificate, key and chain for this domain
 {%- from "vhosting/components/ssl.sls" import install_pair with context %}
-{{ install_pair(salt, domain, ssl) }}
+{{ install_pair(salt, domain, aliases, ssl) }}
 {%- endif %}
 ############################################################################################################################
 # xxx todo: Create a macro for vhost generation for standalone usage

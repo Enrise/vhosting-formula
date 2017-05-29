@@ -10,8 +10,8 @@ env:
   matrix:
     - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/vanilla-nginx --file-root=$PWD"
     - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/vanilla-apache --file-root=$PWD"
-    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/zendserver-nginx --file-root=$PWD"
-    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/zendserver-apache --file-root=$PWD"
+#    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/zendserver-nginx --file-root=$PWD"
+#    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/zendserver-apache --file-root=$PWD"
 
 before_install:
   - sudo apt-get update

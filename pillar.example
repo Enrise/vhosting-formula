@@ -93,6 +93,33 @@ vhosting:
         customip.com:
           listen_ip: 127.0.0.1
 
+        # Enable gzip on this vhost
+        enablegzip.net:
+          gzip:
+            enable: True
+
+        # Enable and customize gzip for this vhost
+        customzip.net:
+          gzip:
+            enable: True
+            options:
+              comp_level: 4
+              gzip_buffers: '6 10k'
+              types:
+                - 'text/css'
+                - 'text/javascript'
+                - 'text/xml'
+                - 'text/plain'
+                - 'text/x-component'
+                - 'application/javascript'
+                - 'application/json'
+                - 'application/xml'
+                - 'application/rss+xml'
+                - 'font/truetype'
+                - 'font/opentype'
+                - 'application/vnc.ms-fontobject'
+                - 'image/svg+xml'
+
       # The databases for this user (if any)
       mysql_database:
         # The databases, where it will automatically create user + db + grant for the given DB name (below)

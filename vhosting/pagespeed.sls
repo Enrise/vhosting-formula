@@ -2,7 +2,7 @@
 {%- set webserver = salt['pillar.get']('vhosting:server:webserver', 'nginx') %}
 
 {%- if webserver == 'nginx' %}
-{%- set pkg_name = 'ngx_pagespeed' %}
+{%- set pkg_name = 'nginx-module-pagespeed' %}
 {%- else %}
 {%- set pkg_name = 'libapache2-mod-pagespeed' %}
 {%- endif %}

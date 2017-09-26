@@ -18,4 +18,7 @@ def run():
     if __salt__['pillar.get']('vhosting:server:letsencrypt', False) == True:
       packages.append('vhosting.letsencrypt')
 
+    if __salt__['pillar.get']('vhosting:server:pagespeed', False) == True:
+      packages.append('vhosting.pagespeed')
+
     return {'include': packages}

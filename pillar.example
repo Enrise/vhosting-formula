@@ -9,6 +9,9 @@ vhosting:
 
     # Enable LetsEncrypt support
     #letsencrypt: True
+
+    # Enable PageSpeed support
+    #pagespeed: True
   config:
     php:
       # Put in the section names (if required) and insert the config like so:
@@ -84,6 +87,29 @@ vhosting:
         #    forward: True
         #    http2: True
         #    letsencrypt: True
+
+        # Pagespeed example
+        #pagespeed-example.com:
+        #  pagespeed:
+        #    enable: True
+
+        # Pagespeed example with different cache path
+        #pagespeed-example-path.com:
+        #  pagespeed:
+        #    enable: True
+        #    file_cache_path: '/tmp/pagespeed'
+
+        # Pagespeed example with specific config
+        #pagespeed-example-config.com:
+        #  pagespeed:
+        #    enable: True
+        #    config:
+        #      DisableFilters: 'rewrite_images,combine_css'
+
+        # Add extra config to the location section (nginx only)
+        extra-location-config.com:
+          extra_location_config:
+            - 'root /var/www/another;'
 
         # Default vhost with special directory structure
         deployable.com:

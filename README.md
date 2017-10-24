@@ -1,6 +1,6 @@
 # Enrise Vhosting Formula
 
-[![Documentation](https://readthedocs.org/projects/vhosting-formula/badge/?version=master)](http://vhosting-formula.readthedocs.org/)
+[![Documentation](https://readthedocs.org/projects/vhosting-formula/badge/?version=latest)](http://vhosting-formula.readthedocs.org/)
 [![Travis branch](https://img.shields.io/travis/Enrise/vhosting-formula/master.svg?style=flat-square)](https://travis-ci.org/Enrise/vhosting-formula)
 
 This Saltstack formula takes care of provisioning your webstack, creates vhosts and databases and serves as an extendable base.
@@ -14,6 +14,6 @@ but there is more…
 >
 > This formula has **only been tested on Ubuntu 14.04/16.04**.
 >
-> :   It will most likely not work on other platforms due to hardcoded
+>     It will most likely not work on other platforms due to hardcoded
 >     package names and Ubuntu-specific commands.
 >

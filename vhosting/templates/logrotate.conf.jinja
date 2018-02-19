@@ -15,9 +15,7 @@
         dateext
         sharedscripts
       	postrotate
-          if /etc/init.d/apache2 status > /dev/null ; then \
-              /etc/init.d/apache2 reload > /dev/null; \
-          fi;
+          [ -d /etc/apache2 ] && apache2ctl graceful > /dev/null 2>&1
           [ -f /var/run/nginx.pid ] && kill -USR1 `cat /var/run/nginx.pid`
       	endscript
       	prerotate

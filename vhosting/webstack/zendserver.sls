@@ -30,7 +30,7 @@ include:
 {% if php_versions|length > 0 %}
 # The PHP-FPM formula only creates these folders if only the "default" PHP stack
 #  is being used, not if multiple co-exist (in combination with ZS).
-/usr/local/zend/etc/fpm.d:
+/usr/local/zend/etc/php-fpm.d:
   file.directory:
     - require:
       - pkg: zendserver
@@ -42,7 +42,7 @@ include:
     - require:
       - pkg: zendserver
     - require_in:
-      - file: /usr/local/zend/etc/fpm.d
+      - file: /usr/local/zend/etc/php-fpm.d
 {%- endif %}
 {%- endif %}
 
@@ -73,7 +73,7 @@ include:
 #
 #kill_fpm:
 #  service.dead:
-#    - name: php5-fpm
+#    - name: php-fpm
 #{%- endif %}
 
 {%- if not enable_zray %}
@@ -86,6 +86,6 @@ include:
     - watch_in:
       - service: zendserver
 {%- if webserver == 'nginx' %}
-      - service: php5-fpm
+      - service: php-fpm
 {% endif -%}
 {%- endif %}

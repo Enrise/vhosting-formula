@@ -18,19 +18,17 @@ include:
 {% if php_versions|length > 0 %}
 # The PHP-FPM formula only creates these folders if only the "default" PHP stack
 #  is being used, not if multiple co-exist (in combination with ZS).
-/usr/local/zend/etc/php-fpm.d:
+/usr/local/zend/etc/fpm.d:
   file.directory:
     - require:
       - pkg: zendserver
-    - require_in:
-      - file: /usr/local/zend/etc/php-fpm.conf
 
 /usr/local/zend/tmp:
   file.directory:
     - require:
       - pkg: zendserver
     - require_in:
-      - file: /usr/local/zend/etc/php-fpm.d
+      - file: /usr/local/zend/etc/fpm.d
 {%- endif %}
 {%- endif %}
 

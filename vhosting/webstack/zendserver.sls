@@ -15,18 +15,6 @@ include:
 {%- endif %}
 
 {%- if webserver == 'nginx' and not disable_webserver %}
-## Re-configure PHP-FPM to allow multiple pools to be used
-/usr/local/zend/etc/php-fpm.conf:
-  file.uncomment:
-    - regex: ^include=etc
-    - char: ;
-    - require:
-      - pkg: zendserver
-    - require_in:
-      - service: php5-fpm
-    - watch_in:
-      - service: zendserver
-
 {% if php_versions|length > 0 %}
 # The PHP-FPM formula only creates these folders if only the "default" PHP stack
 #  is being used, not if multiple co-exist (in combination with ZS).
@@ -34,8 +22,6 @@ include:
   file.directory:
     - require:
       - pkg: zendserver
-    - require_in:
-      - file: /usr/local/zend/etc/php-fpm.conf
 
 /usr/local/zend/tmp:
   file.directory:
@@ -73,7 +59,7 @@ include:
 #
 #kill_fpm:
 #  service.dead:
-#    - name: php5-fpm
+#    - name: php-fpm
 #{%- endif %}
 
 {%- if not enable_zray %}
@@ -86,6 +72,6 @@ include:
     - watch_in:
       - service: zendserver
 {%- if webserver == 'nginx' %}
-      - service: php5-fpm
+      - service: php-fpm
 {% endif -%}
 {%- endif %}

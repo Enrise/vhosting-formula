@@ -27,6 +27,7 @@ vhosting:
       vhost:
         # The domain, without www and must be unique troughout this configuration
         example.com:
+          php: False
           # The docroot is by default /srv/http/USER/domains/DOMAIN but can be overruled
           webroot: /var/www
 
@@ -36,6 +37,7 @@ vhosting:
         #  #template_engine: jinja # default
 
         example.org:
+          php: False
           # This vhost follows the defaults, but does have a few additional HTTP aliases
           aliases:
             - example.eu
@@ -50,12 +52,14 @@ vhosting:
           proxy_pass: 'http://www.example.com'
 
         ssl-demo-one.example:
+          php: False
           ssl:
             # The configuration for SSL for this vhost
             key: ssl-demo-one.example.key
             cert: ssl-demo-one.example.pem
 
         ssl-demo-two.example:
+          php: False
           ssl:
             # The configuration for SSL for this vhost
             key: ssl-demo-two.example.key
@@ -63,6 +67,7 @@ vhosting:
             forward: True
 
         ssl-demo-three.example:
+          php: False
           ssl:
             # The configuration for SSL for this vhost
             key: ssl-demo-three.example.key
@@ -71,6 +76,7 @@ vhosting:
             http2: True
 
         ssl-demo-four.example:
+          php: False
           ssl:
             # The configuration for SSL for this vhost
             key: ssl-demo-four.example.key
@@ -81,6 +87,7 @@ vhosting:
               - TLSv1.3
 
         ssl-demo-five.example:
+          php: False
           ssl:
             # The configuration for SSL for this vhost
             key: ssl-demo-five.example.key
@@ -129,24 +136,29 @@ vhosting:
 
         # Add extra config to the location section (nginx only)
         extra-location-config.com:
+          php: False
           extra_location_config:
             - 'root /var/www/another;'
 
         # Default vhost with special directory structure
         deployable.com:
+          php: False
           deploy_structure: True
 
         # Ordinary vhost but with a specific IP to listen on
         customip.com:
+          php: False
           listen_ip: 127.0.0.1
 
         # Enable gzip on this vhost
         enablegzip.net:
+          php: False
           gzip:
             enable: True
 
         # Enable and customize gzip for this vhost
-        customzip.net:
+        customgzip.net:
+          php: False
           gzip:
             enable: True
             options:
@@ -167,6 +179,10 @@ vhosting:
                 - 'application/vnc.ms-fontobject'
                 - 'image/svg+xml'
 
+        # Enable and customize gzip for this vhost
+        vhostwithphp.net:
+          php_version: 7.3
+
       # The databases for this user (if any)
       mysql_database:
         # The databases, where it will automatically create user + db + grant for the given DB name (below)
@@ -186,6 +202,7 @@ vhosting:
     otheruser:
       vhost:
         otherdomain.eu:
+          php: False
           deploy_structure: True
         moredomains.com:
           aliases:

@@ -179,6 +179,10 @@ vhosting:
                 - 'application/vnc.ms-fontobject'
                 - 'image/svg+xml'
 
+        # Custom PHP version to use for this vhost
+        vhost-with-php.net:
+          php_version: 7.3
+
       # The databases for this user (if any)
       mysql_database:
         # The databases, where it will automatically create user + db + grant for the given DB name (below)

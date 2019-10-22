@@ -201,5 +201,6 @@ vhosting:
           php: False
           deploy_structure: True
         moredomains.com:
+          php: False
           aliases:
             - get-more-domains.now

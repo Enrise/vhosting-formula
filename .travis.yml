@@ -28,6 +28,8 @@ before_install:
   - sudo openssl req -x509 -nodes -days 3650 -subj '/C=NL/ST=Utrecht/L=Amersfoort/O=Enrise/CN=ssl-demo-one.example' -newkey rsa:2048 -keyout $PWD/ssl/ssl-demo-one.example.key -out $PWD/ssl/ssl-demo-one.example.pem
   - sudo openssl req -x509 -nodes -days 3650 -subj '/C=NL/ST=Utrecht/L=Amersfoort/O=Enrise/CN=ssl-demo-two.example' -newkey rsa:2048 -keyout $PWD/ssl/ssl-demo-two.example.key -out $PWD/ssl/ssl-demo-two.example.pem
   - sudo openssl req -x509 -nodes -days 3650 -subj '/C=NL/ST=Utrecht/L=Amersfoort/O=Enrise/CN=ssl-demo-three.example' -newkey rsa:2048 -keyout $PWD/ssl/ssl-demo-three.example.key -out $PWD/ssl/ssl-demo-three.example.pem
+  - sudo openssl req -x509 -nodes -days 3650 -subj '/C=NL/ST=Utrecht/L=Amersfoort/O=Enrise/CN=ssl-demo-four.example' -newkey rsa:2048 -keyout $PWD/ssl/ssl-demo-four.example.key -out $PWD/ssl/ssl-demo-four.example.pem
+  - sudo openssl req -x509 -nodes -days 3650 -subj '/C=NL/ST=Utrecht/L=Amersfoort/O=Enrise/CN=ssl-demo-five.example' -newkey rsa:2048 -keyout $PWD/ssl/ssl-demo-five.example.key -out $PWD/ssl/ssl-demo-five.example.pem
 
 install:
   - sudo mkdir -p /srv && sudo ln -sfn $PWD /srv/formula

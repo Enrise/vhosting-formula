@@ -70,6 +70,27 @@ vhosting:
             forward: True
             http2: True
 
+        ssl-demo-four.example:
+          ssl:
+            # The configuration for SSL for this vhost
+            key: ssl-demo-four.example.key
+            cert: ssl-demo-four.example.pem
+            forward: True
+            http2: True
+            protocols: # Only support TLSv1.3 for this vhost
+              - TLSv1.3
+
+        ssl-demo-five.example:
+          ssl:
+            # The configuration for SSL for this vhost
+            key: ssl-demo-five.example.key
+            cert: ssl-demo-five.example.pem
+            forward: True
+            http2: True
+            # Only use secure ciphers as recommended by https://cipherli.st/
+            ciphers: "EECDH+AESGCM:EDH+AESGCM"
+
+
         #demo-with-ca.example:
         #  ssl:
         #    # The configuration for SSL for this vhost

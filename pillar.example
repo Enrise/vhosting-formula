@@ -179,10 +179,6 @@ vhosting:
                 - 'application/vnc.ms-fontobject'
                 - 'image/svg+xml'
 
-        # Enable and customize gzip for this vhost
-        vhostwithphp.net:
-          php_version: 7.3
-
       # The databases for this user (if any)
       mysql_database:
         # The databases, where it will automatically create user + db + grant for the given DB name (below)

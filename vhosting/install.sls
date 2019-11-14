@@ -5,7 +5,7 @@ def run():
     '''
     packages = []
 
-    for user, user_services in __salt__['pillar.get']('vhosting:users', {}).iteritems():
+    for user, user_services in __salt__['pillar.get']('vhosting:users', {}).items():
       if 'vhost' in user_services:
         packages.append('vhosting.webstack')
       if 'mysql_database' in user_services:

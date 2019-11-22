@@ -12,7 +12,7 @@ but there is more…
 
 > **note**
 >
-> This formula has **only been tested on Ubuntu 14.04/16.04**.
+> This formula has **only been tested on Ubuntu 14.04/16.04/18.04**.
 >
 >     It will most likely not work on other platforms due to hardcoded
 >     package names and Ubuntu-specific commands.

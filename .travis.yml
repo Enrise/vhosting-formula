@@ -1,18 +1,22 @@
-dist: bionic
 language: python
-python:
-- '2.7'
+dist: bionic
 
 env:
   global:
     - BS_PIP_ALLOWED=1
     - BS_ECHO_DEBUG=1
     - STATE=vhosting.travis,vhosting
-  matrix:
-    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/vanilla-nginx --file-root=$PWD"
-    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/vanilla-apache --file-root=$PWD"
-#    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/zendserver-nginx --file-root=$PWD"
-#    - SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/zendserver-apache --file-root=$PWD"
+
+matrix:
+  include:
+    - python: 3.7
+      env: PYTHONVERSION=python3.7 SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/vanilla-nginx --file-root=$PWD"
+    - python: 3.7
+      env: PYTHONVERSION=python3.7 SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/vanilla-apache --file-root=$PWD"
+    - python: 2.7
+      env: PYTHONVERSION=python2.7 SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/vanilla-nginx --file-root=$PWD"
+    - python: 2.7
+      env: PYTHONVERSION=python2.7 SALT_ARGS="-l debug --local --retcode-passthrough --pillar-root=.salt/pillar/vanilla-apache --file-root=$PWD"
 
 before_install:
   - sudo apt-get update
@@ -20,7 +24,7 @@ before_install:
   - sudo mkdir -p /etc/salt/minion.d
   - echo "mysql.default_file:" "'/etc/mysql/debian.cnf'" | sudo tee -a /etc/salt/minion.d/mysql.conf
   # End of workaround
-  - curl -L http://bootstrap.saltstack.org | sudo -E sh -s -- stable
+  - curl -L http://bootstrap.saltstack.org | sudo -E sh -s -- -x ${PYTHONVERSION} stable
   # Cleanup Travis' MySQL leftovers as they conflict with the MariaDB clean install
   - sudo apt-get purge mysql-common mysql-server mysql-client
   # Fix MariaDB debconf requirement

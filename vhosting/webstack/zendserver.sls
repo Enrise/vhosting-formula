@@ -71,7 +71,7 @@ include:
     - onlyif: test -e /usr/local/zend/etc/conf.d/zray.ini
     - watch_in:
       - service: zendserver
-{%- if webserver == 'nginx' %}
-      - service: php-fpm
-{% endif -%}
+{%- for php_version in php_versions %}
+      - service: php{{ php_version }}-fpm
+{%- endfor %}
 {%- endif %}

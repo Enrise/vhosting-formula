@@ -1,14 +1,14 @@
 # Include the appropriate webstack
-{%- set webserver = salt['pillar.get']('vhosting:server:webserver', 'nginx') %}
 {%- set webserver_edition = salt['pillar.get']('vhosting:server:webserver_edition', 'vanilla') %}
-{%- set install_phpfpm = salt['pillar.get']('vhosting:server:install_phpfpm', False) %}
+{%- set webserver = salt['pillar.get']('vhosting:server:webserver', 'nginx') %}
+{%- set install_phpfpm = salt['pillar.get']('vhosting:server:install_phpfpm', True) %}
 {%- set webroot_base = salt['pillar.get']('vhosting:server:basedir', '/srv/http') %}
 
 include:
   - .grains
   {% if webserver == 'nginx' and install_phpfpm == True -%}
   - phpfpm
-  {% endif -%}
+  {% endif -%}  
   - .{{webserver_edition}}
 
 # Create base root for vhosts

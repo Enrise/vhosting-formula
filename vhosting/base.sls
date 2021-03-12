@@ -5,9 +5,11 @@
 # Loops trough the users and create services for them
 {%- for username, resources in salt['pillar.get']('vhosting:users', {}).items() %}
 
+{%- if 'vhost' in resources %}
 {% from "vhosting/components/user.sls" import create_user with context %}
 # Create user {{ username }}
 {{ create_user(username, resources) }}
+{% endif -%}
 
 {%- for resource_type, resource_settings in resources.items() %}
 # Resource: {{ resource_type }}

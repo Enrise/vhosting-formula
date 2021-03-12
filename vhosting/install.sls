@@ -12,13 +12,7 @@ def run():
         packages.append('mariadb')
         packages.append('mariadb.server.salt')
 
-    if __salt__['pillar.get']('vhosting:server:force_install_webstack', False) == True:
-      packages.append('vhosting.webstack')
-
-    if __salt__['pillar.get']('vhosting:server:letsencrypt', False) == True:
+    if __salt__['pillar.get']('vhosting:server:letsencrypt_client', False) == True:
       packages.append('vhosting.letsencrypt')
-
-    if __salt__['pillar.get']('vhosting:server:pagespeed', False) == True:
-      packages.append('vhosting.pagespeed')
 
     return {'include': packages}

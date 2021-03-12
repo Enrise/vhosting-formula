@@ -19,7 +19,7 @@
 {%- set priority = params.get('priority', 50) %}
 {%- set webroot = params.get('webroot', homedir ~ '/hosts/' ~ name ) %}
 {%- set logdir = params.get('logdir', homedir ~ '/logs' ) %}
-{%- set php = params.get('php', True) %}
+{%- set php = params.get('php', False) %}
 {%- set ssl = params.get('ssl', False) %}
 {%- set backup = params.get('backup', False) %}
 
@@ -88,9 +88,15 @@
 
 ############################################################################################################################
 {%- if ssl is mapping %}
+{%- if 'letsencrypt' in ssl and ssl.letsencrypt.get_cert == True %}
+# Install letsencrypt with certificates for this domain
+{%- from "vhosting/components/letsencrypt.sls" import install_letsencrypt with context %}
+{{ install_letsencrypt(salt, domain, aliases, ssl) }}
+{%- else %}
 # Install the required certificate, key and chain for this domain
-{%- from "vhosting/components/ssl.sls" import install_pair with context %}
-{{ install_pair(salt, domain, aliases, ssl) }}
+{%- from "vhosting/components/ssl.sls" import install_cert with context %}
+{{ install_cert(salt, domain, aliases, ssl) }}
+{%- endif %}
 {%- endif %}
 ############################################################################################################################
 # xxx todo: Create a macro for vhost generation for standalone usage

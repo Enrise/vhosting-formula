@@ -1,9 +1,6 @@
 # Getting Started
 
-The package only installs a webstack (configured as vanilla-nginx by default) when:
-
-  -   there are users with vhosts defined;
-  -   the force-flag (`vhosting:server:force_install_webstack`) is set to `True`
+The package only installs a webstack (configured as vanilla-nginx by default) when there are users with vhosts defined.
 
 Same applies for databases, if there is no `mysql_database` key
 underneath the users MySQL-server is not being installed.

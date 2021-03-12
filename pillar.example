@@ -5,7 +5,10 @@ vhosting:
     # Which webserver to use. Supported are nginx and Apache
     webserver: nginx
     # Which edition of the webserver to use. Currently supported: vanilla & zendserver
-    edition: vanilla
+    webserver_edition: vanilla
+
+    # If you want to use php with nginx, set install_phpfpm to True	
+    #install_phpfpm: True
 
     # Enable LetsEncrypt support
     #letsencrypt: True
@@ -51,52 +54,62 @@ vhosting:
           # This is a 'proxy vhost' which is just sending traffic to a different domain but masks the destination
           proxy_pass: 'http://www.example.com'
 
-        ssl-demo-one.example:
+        ssl.example.1:
           php: False
           ssl:
             # The configuration for SSL for this vhost
-            key: ssl-demo-one.example.key
-            cert: ssl-demo-one.example.pem
+            key: ssl.example.key
+            cert: ssl.example.pem
 
-        ssl-demo-two.example:
+        ssl.example.2:
           php: False
           ssl:
             # The configuration for SSL for this vhost
-            key: ssl-demo-two.example.key
-            cert: ssl-demo-two.example.pem
+            key: ssl.example.key
+            cert: ssl.example.pem
             forward: True
 
-        ssl-demo-three.example:
+        ssl.example.3:
           php: False
           ssl:
             # The configuration for SSL for this vhost
-            key: ssl-demo-three.example.key
-            cert: ssl-demo-three.example.pem
+            key: ssl.example.key
+            cert: ssl.example.pem
             forward: True
             http2: True
 
-        ssl-demo-four.example:
+        ssl.example.4:
           php: False
           ssl:
             # The configuration for SSL for this vhost
-            key: ssl-demo-four.example.key
-            cert: ssl-demo-four.example.pem
+            key: ssl.example.key
+            cert: ssl.example.pem
             forward: True
             http2: True
             protocols: # Only support TLSv1.3 for this vhost
               - TLSv1.3
 
-        ssl-demo-five.example:
+        ssl.example.5:
           php: False
           ssl:
             # The configuration for SSL for this vhost
-            key: ssl-demo-five.example.key
-            cert: ssl-demo-five.example.pem
+            key: ssl.example.key
+            cert: ssl.example.pem
             forward: True
             http2: True
             # Only use secure ciphers as recommended by https://cipherli.st/
             ciphers: "EECDH+AESGCM:EDH+AESGCM"
 
+        ssl.with.letsencrypt.example:
+	  ssl:
+            # Set placeholder names here for the symlinks in /etc/ssl, because of dep. on nginx formula. Choose whatever name you like.
+            cert: LE.placeholder.cert
+            key: le.placeholder.key
+              letsencrypt:
+                get_cert: True
+                extra domains:
+                  - an.extra.domain.for.the.cert
+              http2: True
 
         #demo-with-ca.example:
         #  ssl:

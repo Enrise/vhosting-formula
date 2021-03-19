@@ -1,7 +1,7 @@
 # Include the appropriate webstack
 {%- set webserver = salt['pillar.get']('vhosting:server:webserver', 'nginx') %}
 {%- set webserver_edition = salt['pillar.get']('vhosting:server:webserver_edition', 'vanilla') %}
-{%- set install_phpfpm = salt['pillar.get']('vhosting:server:install_phpfpm', False) %}
+{%- set install_phpfpm = salt['pillar.get']('vhosting:server:install_phpfpm', True) %}
 {%- set webroot_base = salt['pillar.get']('vhosting:server:basedir', '/srv/http') %}
 
 include:

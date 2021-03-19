@@ -19,7 +19,7 @@
 {%- set priority = params.get('priority', 50) %}
 {%- set webroot = params.get('webroot', homedir ~ '/hosts/' ~ name ) %}
 {%- set logdir = params.get('logdir', homedir ~ '/logs' ) %}
-{%- set php = params.get('php', False) %}
+{%- set php = params.get('php', True) %}
 {%- set ssl = params.get('ssl', False) %}
 {%- set backup = params.get('backup', False) %}
 

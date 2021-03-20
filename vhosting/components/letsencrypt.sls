@@ -1,5 +1,6 @@
 ## Installs letsencrypt certificates for each vhost
 {% macro install_letsencrypt(salt, main_domain, aliases, config) %}
+{%- set webserver = salt['pillar.get']('vhosting:server:webserver', 'nginx') %}
 
 # Request certificates
 {% set domain_list = main_domain %}

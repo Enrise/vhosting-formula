@@ -9,7 +9,7 @@ letsencrypt-client:
   pkg.installed:
     - pkgs:
       - certbot
-      - python-certbot-{{ webserver }}
+      - python3-certbot-{{ webserver }}
     - require:
       - pkgrepo: letsencrypt-client
       - pkg: {{ webserver }}

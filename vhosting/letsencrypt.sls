@@ -3,7 +3,8 @@
 
 # Install certbot for automatic certificate renewal
 letsencrypt-client:
-  pkgrepo.managed:
+  # this package repo is deprecated see https://launchpad.net/~certbot/+archive/ubuntu/certbot
+  pkgrepo.absent:
     - ppa: certbot/certbot
   pkg.installed:
     - pkgs:

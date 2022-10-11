@@ -1,3 +1,9 @@
+# Archived and unmaintained
+
+This is an old repository that is no longer used or maintained. We advice to no longer use this repository.
+
+## Original README can be found below:
+
 # Enrise Vhosting Formula
 
 [![Documentation](https://readthedocs.org/projects/vhosting-formula/badge/?version=latest)](http://vhosting-formula.readthedocs.org/)

@@ -1,23 +1,23 @@
-# Create a MySQL Database pair (db + user + grants)
-{% macro create(salt, baseconf, owner, params, name) %}
-{%- if 'password' in params %}
-mysqldb_{{ owner }}_{{ name }}:
-  mysql_database.present:
-    - name: {{ name }}
-  mysql_user.present:
-    - name: {{ name }}
-    - password: {{ params.get('password')|json() }}
-    - host: {{ params.get('host', 'localhost')|json() }}
-  mysql_grants.present:
-    - grant: ALL
-    - database: {{ name }}.*
-    - user: {{ name }}
-    - host: {{ params.get('host', 'localhost')|json() }}
-  require:
-    - pkg: python-mysqldb
-    - pkg: mysql-server
-    - service: mysql-server
-    - file: salt_mysql_config
+# # Create a MySQL Database pair (db + user + grants)
+# {% macro create(salt, baseconf, owner, params, name) %}
+# {%- if 'password' in params %}
+# mysqldb_{{ owner }}_{{ name }}:
+#   mysql_database.present:
+#     - name: {{ name }}
+#   mysql_user.present:
+#     - name: {{ name }}
+#     - password: {{ params.get('password')|json() }}
+#     - host: {{ params.get('host', 'localhost')|json() }}
+#   mysql_grants.present:
+#     - grant: ALL
+#     - database: {{ name }}.*
+#     - user: {{ name }}
+#     - host: {{ params.get('host', 'localhost')|json() }}
+#  require:
+#     - pkg: python-mysqldb
+#     - pkg: mysql-server
+#     - service: mysql-server
+#     - file: salt_mysql_config
 
 {%- if 'hosts' in params %}
 # Extra grants required
